@@ -28,18 +28,27 @@ let form = $('#taskTitle, #datepicker, #taskDescription');
 // Task delete Btn
 const cardEl = $('.ui-widget-content');
 
+
+let idArr = JSON.parse(localStorage.getItem('idArr')) || [];
+
 // Todo: create a function to generate a unique task id
-function generateTaskId() {
+function generateTaskId(task) {
+
+    
+
     let id = "id-" + Math.random().toString(14).slice(12);
-    return id;
+
+    return id
+
+    // idArr.append(id)
 }
 
 // Todo: create a function to create a task card
 // function createTaskCard(task)
 function createTaskCard(task) {
 
-    let taskId = generateTaskId();
-    task.id = taskId;
+    // let taskId = generateTaskId(task);
+    // task.id = taskId;
 
     let currentDate = dayjs();
 
@@ -54,7 +63,7 @@ function createTaskCard(task) {
     } else {
         card.setAttribute('class', 'ui-widget-content card w-75 mx-auto border-dark mb-3')
     };
-    card.setAttribute('id', taskId);
+    card.setAttribute('id', task.id);
 
     let cardBody = document.createElement('div');
     cardBody.setAttribute('class', 'card-body p-0');
@@ -100,9 +109,7 @@ function renderTaskList() {
         }
     };
     
-    // for(id in idArray) {
-    //     $(`#${idArray[id]}`).draggable({ revert: 'invalid'})
-    // };
+    
 
     //$('.ui-widget-content').draggable({revert: 'invalid', stack: '.ui-widget-content'})
 }
@@ -115,7 +122,7 @@ function handleAddTask(event){
         title: taskTitle.val(),
         date: datepicker.value,
         description: taskDescription.val(),
-        id: null
+        id: generateTaskId()
     };
 
     taskArrStore.push(taskForm);
@@ -182,7 +189,7 @@ function handleDrop(event, ui) {
 
     console.log('~~', childUpdate)
 
-    
+
 
     // console.log(ui)
 }
