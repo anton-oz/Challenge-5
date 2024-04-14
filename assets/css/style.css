@@ -16,5 +16,9 @@ body {
 }
 
 .ui-widget-content {
+  z-index: 9990;
+}
+
+#formModal {
   z-index: 9999;
 }

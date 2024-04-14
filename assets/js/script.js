@@ -18,7 +18,7 @@ const date = $('#datepicker');
 const taskDescription = $('#taskDescription');
 
 // Task delete Btn
-const deleteTask = $('#deleteTask')
+const cardEl = $('.ui-widget-content');
 
 // Id array
 
@@ -28,8 +28,8 @@ let idArray = JSON.parse(localStorage.getItem('idArray')) || [];
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
     let id = "id-" + Math.random().toString(14).slice(12);
-    idArray.push(id);
-    localStorage.setItem('idArray', JSON.stringify(idArray))
+    // idArray.push(id);
+    // localStorage.setItem('idArray', JSON.stringify(idArray))
     return id;
 }
 console.log(idArray)
@@ -38,12 +38,12 @@ console.log(idArray)
 
 // function createTaskCard(task)
 function createTaskCard(task) {
-    
 
+    let taskId = generateTaskId();
 
     let card = document.createElement('div');
     card.setAttribute('class', 'ui-widget-content card border-dark mb-3');
-    card.setAttribute('id', generateTaskId())
+    card.setAttribute('id', taskId)
 
     let cardBody = document.createElement('div');
     
@@ -65,13 +65,14 @@ function createTaskCard(task) {
     let deleteBtn = document.createElement('button');
     deleteBtn.setAttribute('type', 'button');
     deleteBtn.setAttribute('class', 'btn btn-danger mb-2');
-    deleteBtn.setAttribute('id', 'deleteTask');
     deleteBtn.textContent = 'delete';
     cardBody.append(deleteBtn);
 
     card.append(cardBody);
 
     todoCards.append(card);
+
+    $('.ui-widget-content').draggable({revert: 'invalid'})
 
 }
 
@@ -87,9 +88,11 @@ function renderTaskList() {
         }
     };
     
-    for(id in idArray) {
-        $(`#${idArray[id]}`).draggable({ revert: 'invalid'})
-    };
+    // for(id in idArray) {
+    //     $(`#${idArray[id]}`).draggable({ revert: 'invalid'})
+    // };
+
+    $('.ui-widget-content').draggable({revert: 'invalid'})
 }
 
 // Todo: create a function to handle adding a new task
@@ -106,25 +109,33 @@ function handleAddTask(event){
     localStorage.setItem('taskArrStore', JSON.stringify(taskArrStore));
     console.log(taskArrStore);
 
-
     createTaskCard(taskArrStore[taskArrStore.length - 1]);
 
 
     console.log(taskArrStore);
+
+    taskTitle.reset();
+    date.reset();
+    taskDescription.reset();
 
 
 }
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
+
     event.preventDefault();
 
+    let task = $(event.target).parent('div').parent('div');
+
+    task.remove();
 
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
-    // $(ui.draggable).detach().appendTo(this);
+
+    ui.draggable.appendTo($(this));
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
@@ -134,11 +145,11 @@ $(document).ready(function () {
     
     $('#submit').on('click', handleAddTask);
     
-   
+    todoCards.on('click', '.btn', handleDeleteTask);
 
     $( "#datepicker" ).datepicker();
 
-    // todoCards.droppable({drop: handleDrop});
-    // inProgressCards.droppable({drop: handleDrop});
-    // doneCards.droppable({drop: handleDrop});
+    todoCards.droppable({drop: handleDrop});
+    inProgressCards.droppable({drop: handleDrop});
+    doneCards.droppable({drop: handleDrop});
 });
