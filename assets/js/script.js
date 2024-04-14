@@ -29,18 +29,11 @@ let form = $('#taskTitle, #datepicker, #taskDescription');
 const cardEl = $('.ui-widget-content');
 
 
-let idArr = JSON.parse(localStorage.getItem('idArr')) || [];
 
 // Todo: create a function to generate a unique task id
-function generateTaskId(task) {
-
-    
-
+function generateTaskId() {
     let id = "id-" + Math.random().toString(14).slice(12);
-
     return id
-
-    // idArr.append(id)
 }
 
 // Todo: create a function to create a task card
@@ -177,21 +170,79 @@ function handleDrop(event, ui) {
     // todoArr
     // inProgressArr
     // doneArr
-    let x = JSON.parse(localStorage.getItem('x'))|| 0;
-    x = x+1;
-    console.log(x)
-    localStorage.setItem('x', JSON.stringify(x))
-    console.log($(event.target))
+    // let x = JSON.parse(localStorage.getItem('x'))|| 0;
+    // x = x+1;
+    // console.log(x)
 
-    $(event.target)
+
+
 
     let childUpdate = $(event.target).children();
+
+    console.log(childUpdate.length)
+
+    for (let i = 0; childUpdate.length > i; i++) {
+        //console.log(childUpdate[i].id)
+
+        let currentId = childUpdate[i].id
+
+        let currentIdEl = $(`#${childUpdate[i].id}`)
+
+        let parentEl = $(currentIdEl.parent())
+
+        let parentId = parentEl[0].id
+
+        if (parentId === 'todo-cards') {
+            console.log('todo-cards')
+            idCheck('todoArr', todoArr, currentId)
+            // if (todoArr) {
+            //     let check = false;
+            //     for (i in todoArr) {
+            //         if (todoArr[i] === currentId) {
+            //             check = true
+            //             console.log('yup')
+            //         }
+            //     }
+            //     if (!check) {
+            //         todoArr.push(currentId)
+            //         localStorage.setItem('todoArr', JSON.stringify(todoArr))
+            //     }
+            // }
+        } else if (parentId === 'in-progress-cards') {
+            console.log('in-progress-cards')
+            idCheck('todoArr', todoArr, currentId)
+            idCheck('inProgressArr', inProgressArr, currentId)
+        } else if (parentId === 'done-cards') {
+            console.log('done-cards')
+        }
+        
+    }
 
     console.log('~~', childUpdate)
 
 
 
     // console.log(ui)
+}
+function idCheck(arrayName, array, currId) {
+    if (array) {
+        let check = false;
+        let indexMatch;
+        for (i in array) {
+            if (array[i] === currId) {
+                check = true
+                indexMatch = i
+                console.log('yup')
+            }
+        }
+        if (!check) {
+            array.push(currId)
+            localStorage.setItem(`${arrayName}`, JSON.stringify(array))
+        } else if (check) {
+            array.splice(indexMatch, 1)
+        }
+        
+    }
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
