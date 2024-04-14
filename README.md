@@ -35,6 +35,7 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 ## Credits
 
 [random id generator](https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with-javascript)
+[find matching id in object array](./assets/sources/chatgpt.md)
 
 List your collaborators, if any, with links to their GitHub profiles.
 

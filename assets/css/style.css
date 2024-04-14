@@ -15,10 +15,7 @@ body {
   cursor: grab;
 }
 
-.ui-widget-content {
-  z-index: 9990;
-}
-
-#formModal {
-  z-index: 9999;
+.sortable {
+  min-width: 100%;
+  min-height: 100%;
 }

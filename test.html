@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag and Drop to Remove and Append</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    .draggable {
+        width: 50px;
+        height: 50px;
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+        cursor: move;
+        margin: 10px;
+        float: left;
+    }
+    .droppable-area {
+        width: 200px;
+        height: 200px;
+        border: 2px dashed #aaa;
+        margin-top: 20px;
+        padding: 10px;
+        float: left;
+    }
+</style>
+</head>
+<body>
+
+<div class="draggable ui-widget-content">
+    Drag me 1
+</div>
+<div class="draggable ui-widget-content">
+    Drag me 2
+</div>
+<div class="draggable ui-widget-content">
+    Drag me 3
+</div>
+
+<div id="droppable1" class="droppable-area">
+    Drop here 1
+</div>
+<div id="droppable2" class="droppable-area">
+    Drop here 2
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $(".draggable").draggable({
+            revert: "invalid",
+            cursor: "move"
+        });
+
+        $(".droppable-area").droppable({
+            drop: function(event, ui) {
+                // Remove dragged element from its original position
+                ui.draggable.remove();
+                
+                // Append dragged element to the droppable area
+                $(this).append(ui.draggable);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
