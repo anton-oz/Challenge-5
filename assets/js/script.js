@@ -115,7 +115,8 @@ function handleAddTask(event){
         title: taskTitle.val(),
         date: datepicker.value,
         description: taskDescription.val(),
-        id: generateTaskId()
+        id: generateTaskId(),
+        progress: "to-do"
     };
 
     taskArrStore.push(taskForm);
