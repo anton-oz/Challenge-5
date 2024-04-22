@@ -1,5 +1,7 @@
 # Jquery KanBan Taskboard
 
+[live site](https://anton-oz.github.io/KanBan-TaskBoard/)
+
 ## Description
 
 I built this app to gain a better understanding of jqeury and jqeury ui. The app provides a nice polished interface for a simple to-do application. I learned that reading documentation and brainstorming different ways to approach a problem is beneficial if you are stuck on a problem. I ran into more than a few issues with this project, but everytime I decided to approach from a different angle it proved to be a good decision.
